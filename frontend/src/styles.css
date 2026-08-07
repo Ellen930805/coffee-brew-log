@@ -1,0 +1,157 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #1f2937;
+  background: #f4f1ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #f6efe7 0%, #f4f1ea 100%);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.8rem;
+  color: #8b5e3c;
+  margin: 0 0 0.3rem;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.panel {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 12px 30px rgba(45, 29, 14, 0.08);
+}
+
+.brew-form {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.brew-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.brew-form input,
+.brew-form select,
+.brew-form textarea {
+  border: 1px solid #d7c7b5;
+  border-radius: 0.7rem;
+  padding: 0.7rem 0.8rem;
+  background: #fcfaf7;
+}
+
+.brew-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-actions,
+.brew-card__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+button {
+  border: none;
+  background: #6b4f2b;
+  color: white;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #e6d6c3;
+  color: #4a2e17;
+}
+
+.error-text {
+  color: #b91c1c;
+  font-size: 0.95rem;
+}
+
+.brew-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.brew-card {
+  border: 1px solid #eee3d2;
+  border-radius: 0.9rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brew-card__meta {
+  color: #8b5e3c;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+
+.empty-state {
+  color: #6b7280;
+  padding: 1rem 0;
+}
+
+@media (max-width: 860px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .page-header,
+  .brew-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

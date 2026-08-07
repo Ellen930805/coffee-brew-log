@@ -1,0 +1,20 @@
+{
+  "name": "coffee-brew-log-backend",
+  "version": "1.0.0",
+  "description": "Backend API for the coffee brew log app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "express": "^4.21.2",
+    "sequelize": "^6.15.0",
+    "sqlite3": "^5.1.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  }
+}
