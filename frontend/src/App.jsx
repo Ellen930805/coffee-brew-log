@@ -17,6 +17,7 @@ function App() {
   const [editingId, setEditingId] = useState(null);
   const [filter, setFilter] = useState('All');
   const [error, setError] = useState('');
+  const [showForm, setShowForm] = useState(false);
 
   const fetchBrews = async () => {
     const response = await fetch('/api/brews');
@@ -33,23 +34,34 @@ function App() {
     setError('');
 
     const payload = { ...formData };
-    const required = Object.values(payload).some((value) => String(value).trim() === '');
+
+    const required = Object.values(payload).some(
+      (value) => String(value).trim() === ''
+    );
+
     if (required) {
       setError('Please fill in every field.');
       return;
     }
 
-    const url = editingId ? `/api/brews/${editingId}` : '/api/brews';
+    const url = editingId
+      ? `/api/brews/${editingId}`
+      : '/api/brews';
+
     const method = editingId ? 'PUT' : 'POST';
+
     const response = await fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(payload)
     });
 
     if (response.ok) {
       setFormData(emptyForm);
       setEditingId(null);
+      setShowForm(false);
       fetchBrews();
     } else {
       const data = await response.json();
@@ -59,6 +71,7 @@ function App() {
 
   const handleEdit = (brew) => {
     setEditingId(brew.id);
+
     setFormData({
       coffee: brew.coffee,
       roast: brew.roast,
@@ -67,55 +80,98 @@ function App() {
       notes: brew.notes,
       date: brew.date
     });
+
+    setShowForm(true);
   };
 
   const handleDelete = async (id) => {
-    const response = await fetch(`/api/brews/${id}`, { method: 'DELETE' });
+    const response = await fetch(`/api/brews/${id}`, {
+      method: 'DELETE'
+    });
+
     if (response.ok) {
       fetchBrews();
     }
   };
 
-  const visibleBrews = filter === 'All'
-    ? brews
-    : brews.filter((brew) => brew.method === filter);
+  const handleAdd = () => {
+    setEditingId(null);
+    setFormData(emptyForm);
+    setError('');
+    setShowForm(true);
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setFormData(emptyForm);
+    setError('');
+    setShowForm(false);
+  };
+
+  const visibleBrews =
+    filter === 'All'
+      ? brews
+      : brews.filter((brew) => brew.method === filter);
 
   return (
     <div className="app-shell">
+
       <header className="page-header">
-        <div>
-          <p className="eyebrow">Coffee Brew Log</p>
-          <h1>Brews: {brews.length}</h1>
-        </div>
-        <select value={filter} onChange={(event) => setFilter(event.target.value)}>
-          <option value="All">All methods</option>
+        <h1>Brew log</h1>
+
+        <button className="add-button" onClick={handleAdd}>
+          Add
+        </button>
+      </header>
+
+      <div className="filter-container">
+        <select
+          value={filter}
+          onChange={(event) => setFilter(event.target.value)}
+        >
+          <option value="All">Filter by method</option>
           <option value="Espresso">Espresso</option>
           <option value="Pour Over">Pour Over</option>
           <option value="French Press">French Press</option>
           <option value="Aeropress">Aeropress</option>
         </select>
-      </header>
+      </div>
 
-      <main className="content-grid">
-        <section className="panel">
-          <h2>{editingId ? 'Edit brew entry' : 'New brew entry'}</h2>
+      {showForm && (
+        <section className="form-panel">
+          <div className="form-header">
+            <h2>
+              {editingId ? 'Edit brew' : 'Add brew'}
+            </h2>
+
+            <button
+              type="button"
+              className="close-button"
+              onClick={handleCancel}
+            >
+              ×
+            </button>
+          </div>
+
           <BrewForm
             formData={formData}
             setFormData={setFormData}
             error={error}
             onSubmit={handleSubmit}
             editingId={editingId}
-            onCancel={() => {
-              setEditingId(null);
-              setFormData(emptyForm);
-            }}
+            onCancel={handleCancel}
           />
         </section>
+      )}
 
-        <section className="panel">
-          <BrewList brews={visibleBrews} onEdit={handleEdit} onDelete={handleDelete} />
-        </section>
+      <main className="brew-log-container">
+        <BrewList
+          brews={visibleBrews}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
       </main>
+
     </div>
   );
 }
