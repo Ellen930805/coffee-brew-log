@@ -1,7 +1,13 @@
 const path = require('path');
 const { Sequelize } = require('sequelize');
 
-const storagePath = path.join(__dirname, '..', 'data', 'coffee-brew-log.sqlite');
+const storagePath = path.join(
+  __dirname,
+  '..',
+  'data',
+  'coffee-brew-log.sqlite'
+);
+
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: storagePath,
@@ -13,4 +19,7 @@ async function initializeDatabase() {
   await sequelize.sync({ force: false });
 }
 
-module.exports = { sequelize, initializeDatabase };
+module.exports = {
+  sequelize,
+  initializeDatabase
+};
