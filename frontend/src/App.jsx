@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import BrewForm from './components/BrewForm';
 import BrewList from './components/BrewList';
 
-const API_URL = 'https://coffee-brew-log-1-n2ka.onrender.com';
+const API_URL = 'https://coffee-brew-log-5.onrender.com';
 
 const emptyForm = {
   beans: '',
@@ -23,9 +23,19 @@ function App() {
   const [showForm, setShowForm] = useState(false);
 
   const fetchBrews = async () => {
-    const response = await fetch(`${API_URL}/api/brews`);
-    const data = await response.json();
-    setBrews(data);
+    try {
+      const response = await fetch(`${API_URL}/api/brews`);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch brews');
+      }
+
+      const data = await response.json();
+      setBrews(data);
+    } catch (error) {
+      console.error(error);
+      setError('Unable to load brews. Please try again.');
+    }
   };
 
   useEffect(() => {
@@ -36,9 +46,7 @@ function App() {
     event.preventDefault();
     setError('');
 
-    const payload = { ...formData };
-
-    const required = Object.values(payload).some(
+    const required = Object.values(formData).some(
       (value) => String(value).trim() === ''
     );
 
@@ -53,22 +61,29 @@ function App() {
 
     const method = editingId ? 'PUT' : 'POST';
 
-    const response = await fetch(url, {
-      method,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
 
-    if (response.ok) {
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || 'Something went wrong.');
+        return;
+      }
+
       setFormData(emptyForm);
       setEditingId(null);
       setShowForm(false);
-      fetchBrews();
-    } else {
-      const data = await response.json();
-      setError(data.error || 'Something went wrong');
+      await fetchBrews();
+    } catch (error) {
+      console.error(error);
+      setError('Unable to save brew. Please try again.');
     }
   };
 
@@ -76,24 +91,34 @@ function App() {
     setEditingId(brew.id);
 
     setFormData({
-      beans: brew.beans,
-      method: brew.method,
-      coffeeGrams: brew.coffeeGrams,
-      waterGrams: brew.waterGrams,
-      rating: brew.rating,
-      tastingNotes: brew.tastingNotes
+      beans: brew.beans || '',
+      method: brew.method || '',
+      coffeeGrams: brew.coffeeGrams || '',
+      waterGrams: brew.waterGrams || '',
+      rating: brew.rating || '',
+      tastingNotes: brew.tastingNotes || ''
     });
 
+    setError('');
     setShowForm(true);
   };
 
   const handleDelete = async (id) => {
-    const response = await fetch(`${API_URL}/api/brews/${id}`, {
-      method: 'DELETE'
-    });
+    try {
+      const response = await fetch(`${API_URL}/api/brews/${id}`, {
+        method: 'DELETE'
+      });
 
-    if (response.ok) {
-      fetchBrews();
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || 'Failed to delete brew.');
+        return;
+      }
+
+      await fetchBrews();
+    } catch (error) {
+      console.error(error);
+      setError('Unable to delete brew. Please try again.');
     }
   };
 
@@ -121,7 +146,11 @@ function App() {
       <header className="page-header">
         <h1>Brews: {brews.length}</h1>
 
-        <button className="add-button" onClick={handleAdd}>
+        <button
+          type="button"
+          className="add-button"
+          onClick={handleAdd}
+        >
           Add
         </button>
       </header>
