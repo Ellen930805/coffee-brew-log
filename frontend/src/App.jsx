@@ -1,4 +1,3 @@
-```jsx
 import { useEffect, useState } from 'react';
 import BrewForm from './components/BrewForm';
 import BrewList from './components/BrewList';
@@ -24,13 +23,15 @@ function App() {
 
   const fetchBrews = async () => {
     try {
-const response = await fetch(`${API_URL}/api/brews`);
+      const response = await fetch(`${API_URL}/api/brews`);
+
       if (!response.ok) {
         throw new Error('Failed to fetch brews');
       }
 
       const data = await response.json();
       setBrews(data);
+      setError('');
     } catch (error) {
       console.error('Fetch error:', error);
       setError('Unable to load brews. Please try again.');
@@ -76,7 +77,7 @@ const response = await fetch(`${API_URL}/api/brews`);
         return;
       }
 
-      setFormData(emptyForm);
+      setFormData({ ...emptyForm });
       setEditingId(null);
       setShowForm(false);
 
@@ -132,14 +133,14 @@ const response = await fetch(`${API_URL}/api/brews`);
 
   const handleAdd = () => {
     setEditingId(null);
-    setFormData(emptyForm);
+    setFormData({ ...emptyForm });
     setError('');
     setShowForm(true);
   };
 
   const handleCancel = () => {
     setEditingId(null);
-    setFormData(emptyForm);
+    setFormData({ ...emptyForm });
     setError('');
     setShowForm(false);
   };
@@ -214,4 +215,4 @@ const response = await fetch(`${API_URL}/api/brews`);
 }
 
 export default App;
-```
+   
