@@ -17,21 +17,11 @@ function BrewForm({
   return (
     <form className="brew-form" onSubmit={onSubmit}>
       <label>
-        Coffee
+        Beans
         <input
           type="text"
-          value={formData.coffee}
-          onChange={updateField('coffee')}
-          required
-        />
-      </label>
-
-      <label>
-        Roast
-        <input
-          type="text"
-          value={formData.roast}
-          onChange={updateField('roast')}
+          value={formData.beans}
+          onChange={updateField('beans')}
           required
         />
       </label>
@@ -52,30 +42,44 @@ function BrewForm({
       </label>
 
       <label>
-        Ratio
+        Coffee grams
         <input
-          type="text"
-          value={formData.ratio}
-          onChange={updateField('ratio')}
+          type="number"
+          min="1"
+          value={formData.coffeeGrams}
+          onChange={updateField('coffeeGrams')}
           required
         />
       </label>
 
       <label>
-        Date
+        Water grams
         <input
-          type="date"
-          value={formData.date}
-          onChange={updateField('date')}
+          type="number"
+          min="1"
+          value={formData.waterGrams}
+          onChange={updateField('waterGrams')}
           required
         />
       </label>
 
       <label>
-        Notes
+        Rating
+        <input
+          type="number"
+          min="1"
+          max="5"
+          value={formData.rating}
+          onChange={updateField('rating')}
+          required
+        />
+      </label>
+
+      <label>
+        Tasting notes
         <textarea
-          value={formData.notes}
-          onChange={updateField('notes')}
+          value={formData.tastingNotes}
+          onChange={updateField('tastingNotes')}
           required
         />
       </label>
