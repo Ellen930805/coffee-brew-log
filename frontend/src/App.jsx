@@ -1,3 +1,4 @@
+```jsx
 import { useEffect, useState } from 'react';
 import BrewForm from './components/BrewForm';
 import BrewList from './components/BrewList';
@@ -118,7 +119,7 @@ function App() {
   return (
     <div className="app-shell">
       <header className="page-header">
-        <h1>Brew log</h1>
+        <h1>Brews: {brews.length}</h1>
 
         <button className="add-button" onClick={handleAdd}>
           Add
@@ -175,3 +176,4 @@ function App() {
 }
 
 export default App;
+```
