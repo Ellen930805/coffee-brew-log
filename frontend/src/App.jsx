@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import BrewForm from './components/BrewForm';
 import BrewList from './components/BrewList';
 
-const API_URL = 'https://coffee-brew-log-5.onrender.com';
+const API_URL = 'https://coffee-brew-log-9.onrender.com';
 
 const emptyForm = {
   beans: '',
@@ -33,7 +33,7 @@ function App() {
       const data = await response.json();
       setBrews(data);
     } catch (error) {
-      console.error(error);
+      console.error('Fetch error:', error);
       setError('Unable to load brews. Please try again.');
     }
   };
@@ -80,9 +80,10 @@ function App() {
       setFormData(emptyForm);
       setEditingId(null);
       setShowForm(false);
+
       await fetchBrews();
     } catch (error) {
-      console.error(error);
+      console.error('Save error:', error);
       setError('Unable to save brew. Please try again.');
     }
   };
@@ -93,9 +94,9 @@ function App() {
     setFormData({
       beans: brew.beans || '',
       method: brew.method || '',
-      coffeeGrams: brew.coffeeGrams || '',
-      waterGrams: brew.waterGrams || '',
-      rating: brew.rating || '',
+      coffeeGrams: brew.coffeeGrams ?? '',
+      waterGrams: brew.waterGrams ?? '',
+      rating: brew.rating ?? '',
       tastingNotes: brew.tastingNotes || ''
     });
 
@@ -110,14 +111,22 @@ function App() {
       });
 
       if (!response.ok) {
-        const data = await response.json();
+        let data = {};
+
+        try {
+          data = await response.json();
+        } catch {
+          // DELETE may return an empty response.
+        }
+
         setError(data.error || 'Failed to delete brew.');
         return;
       }
 
+      setError('');
       await fetchBrews();
     } catch (error) {
-      console.error(error);
+      console.error('Delete error:', error);
       setError('Unable to delete brew. Please try again.');
     }
   };
@@ -177,6 +186,7 @@ function App() {
               type="button"
               className="close-button"
               onClick={handleCancel}
+              aria-label="Close form"
             >
               ×
             </button>
