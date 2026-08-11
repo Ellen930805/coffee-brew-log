@@ -24,8 +24,7 @@ function App() {
 
   const fetchBrews = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/brews`);
-
+const response = await fetch(`${API_URL}/api/brews`);
       if (!response.ok) {
         throw new Error('Failed to fetch brews');
       }
