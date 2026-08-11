@@ -1,4 +1,3 @@
-```jsx
 function BrewList({ brews, onEdit, onDelete }) {
   return (
     <div className="brew-list">
@@ -9,14 +8,21 @@ function BrewList({ brews, onEdit, onDelete }) {
       ) : (
         brews.map((brew, index) => (
           <article key={brew.id} className="brew-card">
-            <div className={`brew-number brew-number-${index % 3}`}>
+
+            <div
+              className={
+                'brew-number brew-number-' + (index % 3)
+              }
+            >
               {index + 1}
             </div>
 
             <div className="brew-card-content">
+
               <h3>{brew.beans}</h3>
 
               <div className="brew-details">
+
                 <span className="brew-pill">
                   {brew.method}
                 </span>
@@ -32,6 +38,7 @@ function BrewList({ brews, onEdit, onDelete }) {
                 <span className="brew-pill">
                   ⭐ {brew.rating}/5
                 </span>
+
               </div>
 
               {brew.tastingNotes && (
@@ -39,14 +46,16 @@ function BrewList({ brews, onEdit, onDelete }) {
                   {brew.tastingNotes}
                 </p>
               )}
+
             </div>
 
             <div className="brew-card-actions">
+
               <button
                 type="button"
                 className="edit-button"
                 onClick={() => onEdit(brew)}
-                aria-label={`Edit ${brew.beans}`}
+                aria-label={'Edit ' + brew.beans}
               >
                 ✎
               </button>
@@ -55,11 +64,13 @@ function BrewList({ brews, onEdit, onDelete }) {
                 type="button"
                 className="delete-button"
                 onClick={() => onDelete(brew.id)}
-                aria-label={`Delete ${brew.beans}`}
+                aria-label={'Delete ' + brew.beans}
               >
                 ×
               </button>
+
             </div>
+
           </article>
         ))
       )}
@@ -68,4 +79,3 @@ function BrewList({ brews, onEdit, onDelete }) {
 }
 
 export default BrewList;
-```
