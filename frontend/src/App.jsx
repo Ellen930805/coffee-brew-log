@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import BrewForm from './components/BrewForm';
 import BrewList from './components/BrewList';
 
+const API_URL = 'https://coffee-brew-log-1-n2ka.onrender.com';
+
 const emptyForm = {
   coffee: '',
   roast: '',
@@ -10,8 +12,6 @@ const emptyForm = {
   notes: '',
   date: ''
 };
-
-function App() {
   const [brews, setBrews] = useState([]);
   const [formData, setFormData] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
