@@ -1,4 +1,3 @@
-:::writing{variant="document" id="68421"}
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../sequelize');
 
@@ -37,14 +36,4 @@ const Brew = sequelize.define('Brew', {
   timestamps: false
 });
 
-module.exports = Brew;
-:::
-
-### VERY IMPORTANT
-
-In VS Code, your file should look like this:
-
-```text
-const { DataTypes } = require('sequelize');
-...
 module.exports = Brew;
