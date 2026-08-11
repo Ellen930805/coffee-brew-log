@@ -25,15 +25,33 @@ router.get('/', async (req, res) => {
     res.status(200).json(brews);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to fetch brews' });
+    res.status(500).json({
+      error: 'Failed to fetch brews'
+    });
   }
 });
 
 // POST /api/brews
 router.post('/', async (req, res) => {
-  const { coffee, roast, method, ratio, notes, date } = req.body;
+  const {
+    beans,
+    method,
+    coffeeGrams,
+    waterGrams,
+    rating,
+    tastingNotes
+  } = req.body;
 
-  if ([coffee, roast, method, ratio, notes, date].some(isBlank)) {
+  if (
+    [
+      beans,
+      method,
+      coffeeGrams,
+      waterGrams,
+      rating,
+      tastingNotes
+    ].some(isBlank)
+  ) {
     return res.status(400).json({
       error: 'All fields are required'
     });
@@ -43,12 +61,12 @@ router.post('/', async (req, res) => {
     await initializeDatabase();
 
     const brew = await Brew.create({
-      coffee,
-      roast,
+      beans,
       method,
-      ratio,
-      notes,
-      date
+      coffeeGrams,
+      waterGrams,
+      rating,
+      tastingNotes
     });
 
     res.status(201).json(brew);
@@ -62,9 +80,25 @@ router.post('/', async (req, res) => {
 
 // PUT /api/brews/:id
 router.put('/:id', async (req, res) => {
-  const { coffee, roast, method, ratio, notes, date } = req.body;
+  const {
+    beans,
+    method,
+    coffeeGrams,
+    waterGrams,
+    rating,
+    tastingNotes
+  } = req.body;
 
-  if ([coffee, roast, method, ratio, notes, date].some(isBlank)) {
+  if (
+    [
+      beans,
+      method,
+      coffeeGrams,
+      waterGrams,
+      rating,
+      tastingNotes
+    ].some(isBlank)
+  ) {
     return res.status(400).json({
       error: 'All fields are required'
     });
@@ -82,12 +116,12 @@ router.put('/:id', async (req, res) => {
     }
 
     await brew.update({
-      coffee,
-      roast,
+      beans,
       method,
-      ratio,
-      notes,
-      date
+      coffeeGrams,
+      waterGrams,
+      rating,
+      tastingNotes
     });
 
     res.status(200).json(brew);
@@ -125,4 +159,3 @@ router.delete('/:id', async (req, res) => {
 
 module.exports = router;
 ```
-
