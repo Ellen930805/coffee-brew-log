@@ -12,6 +12,8 @@ const emptyForm = {
   notes: '',
   date: ''
 };
+
+function App() {
   const [brews, setBrews] = useState([]);
   const [formData, setFormData] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
@@ -20,7 +22,7 @@ const emptyForm = {
   const [showForm, setShowForm] = useState(false);
 
   const fetchBrews = async () => {
-    const response = await fetch('/api/brews');
+    const response = await fetch(`${API_URL}/api/brews`);
     const data = await response.json();
     setBrews(data);
   };
@@ -45,8 +47,8 @@ const emptyForm = {
     }
 
     const url = editingId
-      ? `/api/brews/${editingId}`
-      : '/api/brews';
+      ? `${API_URL}/api/brews/${editingId}`
+      : `${API_URL}/api/brews`;
 
     const method = editingId ? 'PUT' : 'POST';
 
@@ -85,7 +87,7 @@ const emptyForm = {
   };
 
   const handleDelete = async (id) => {
-    const response = await fetch(`/api/brews/${id}`, {
+    const response = await fetch(`${API_URL}/api/brews/${id}`, {
       method: 'DELETE'
     });
 
@@ -115,7 +117,6 @@ const emptyForm = {
 
   return (
     <div className="app-shell">
-
       <header className="page-header">
         <h1>Brew log</h1>
 
@@ -140,9 +141,7 @@ const emptyForm = {
       {showForm && (
         <section className="form-panel">
           <div className="form-header">
-            <h2>
-              {editingId ? 'Edit brew' : 'Add brew'}
-            </h2>
+            <h2>{editingId ? 'Edit brew' : 'Add brew'}</h2>
 
             <button
               type="button"
@@ -171,7 +170,6 @@ const emptyForm = {
           onDelete={handleDelete}
         />
       </main>
-
     </div>
   );
 }
