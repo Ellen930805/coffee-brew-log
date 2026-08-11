@@ -6,12 +6,12 @@ import BrewList from './components/BrewList';
 const API_URL = 'https://coffee-brew-log-1-n2ka.onrender.com';
 
 const emptyForm = {
-  coffee: '',
-  roast: '',
+  beans: '',
   method: '',
-  ratio: '',
-  notes: '',
-  date: ''
+  coffeeGrams: '',
+  waterGrams: '',
+  rating: '',
+  tastingNotes: ''
 };
 
 function App() {
@@ -76,12 +76,12 @@ function App() {
     setEditingId(brew.id);
 
     setFormData({
-      coffee: brew.coffee,
-      roast: brew.roast,
+      beans: brew.beans,
       method: brew.method,
-      ratio: brew.ratio,
-      notes: brew.notes,
-      date: brew.date
+      coffeeGrams: brew.coffeeGrams,
+      waterGrams: brew.waterGrams,
+      rating: brew.rating,
+      tastingNotes: brew.tastingNotes
     });
 
     setShowForm(true);
