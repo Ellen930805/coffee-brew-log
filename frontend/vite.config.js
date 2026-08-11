@@ -5,6 +5,6 @@ export default defineConfig({
   plugins: [react()],
   preview: {
     host: '0.0.0.0',
-    allowedHosts: ['coffee-brew-log-3.onrender.com']
+    port: 10000
   }
 });
