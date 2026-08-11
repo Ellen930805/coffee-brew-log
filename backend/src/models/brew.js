@@ -1,39 +1,51 @@
+```javascript
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../sequelize');
 
-const Brew = sequelize.define('Brew', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
+const Brew = sequelize.define(
+  'Brew',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+
+    beans: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+
+    method: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+
+    coffeeGrams: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    waterGrams: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    tastingNotes: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    }
   },
-  coffee: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  roast: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  method: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  ratio: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  notes: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
-  date: {
-    type: DataTypes.STRING,
-    allowNull: false
+  {
+    tableName: 'brews',
+    timestamps: false
   }
-}, {
-  tableName: 'brews',
-  timestamps: false
-});
+);
 
 module.exports = Brew;
+```
