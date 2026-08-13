@@ -25,11 +25,9 @@ https://coffee-brew-log-api.onrender.com/api/brews/
 ## ✨ Features
 
 - ☕ Add coffee brewing sessions
-- 📝 Record coffee beans and brewing method
+- 📝 Record coffee and brewing information
 - ⚖️ Record coffee and water quantities
-- ⭐ Rate each coffee brew
-- 👃 Add tasting notes
-- 📋 View all recorded brews
+- 📋 View all saved brews
 - 🔍 Filter brews by brewing method
 - ✏️ Edit existing brew entries
 - 🗑️ Delete brew entries
@@ -71,9 +69,13 @@ https://coffee-brew-log-api.onrender.com/api/brews/
 
 ![Add Brew](screenshots/add-brew.png)
 
-### 📋 Brew List
+### ✏️ Edit Brew
 
-![Brew List](screenshots/brew-list.png)
+![Edit Brew](screenshots/edit-brew.png)
+
+### 🔍 Filter Brews
+
+![Filter Brews](screenshots/filter.png)
 
 ---
 
@@ -82,22 +84,32 @@ https://coffee-brew-log-api.onrender.com/api/brews/
 ```text
 coffee-brew-log/
 │
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── package.json
-│   └── vite.config.js
-│
 ├── backend/
 │   ├── manage.py
 │   ├── requirements.txt
 │   └── ...
 │
+├── frontend/
+│   ├── src/
+│   ├── package.json
+│   └── vite.config.js
+│
 ├── screenshots/
 │   ├── home.png
 │   ├── add-brew.png
-│   └── brew-list.png
+│   ├── edit-brew.png
+│   └── filter.png
 │
+├── Documentation.md
 └── README.md
+## 👩‍💻 Author
+
+**Ellen Sesoko**
+
+Aspiring Full-Stack Developer
+
+This project was developed as part of my full-stack development journey, demonstrating skills in React, Django REST Framework, CRUD operations, API integration, database management, and deployment.
+
+### 🔗 GitHub
+
+[View my GitHub profile](https://github.com/Ellen930805)
