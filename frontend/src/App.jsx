@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import BrewForm from "./components/BrewForm";
 import BrewList from "./components/BrewList";
 
-const API_URL = "https://coffee-brew-log-8.onrender.com";
+const API_URL = "https://coffee-brew-log-backend-ygmu.onrender.com";
 
 const emptyForm = {
   beans: "",
@@ -116,7 +116,7 @@ function App() {
         try {
           data = await response.json();
         } catch {
-          // The server may return an empty response.
+          // Server may return an empty response.
         }
 
         setError(data.error || "Failed to delete brew.");
