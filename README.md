@@ -1,55 +1,54 @@
 # ☕ Coffee Brew Log
 
-![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
-![Django](https://img.shields.io/badge/Django-092E20?logo=django&logoColor=white)
-![Django REST Framework](https://img.shields.io/badge/Django%20REST%20Framework-red)
-![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?logo=bootstrap&logoColor=white)
-![Axios](https://img.shields.io/badge/Axios-5A29E4)
-![Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7)
+A full-stack web application for recording, managing, and reviewing coffee brewing sessions.
 
-A full-stack web application that allows users to record, manage, and organize coffee brewing sessions. Built with React, Django REST Framework, and SQLite, the application provides a responsive interface for creating, viewing, filtering, editing, and deleting brew entries through a RESTful API.
+The application allows users to create brew entries, view saved brews, filter them by brewing method, edit existing entries, and delete entries.
 
 ---
 
 ## 🚀 Live Demo
 
-🌐 **Frontend:**  
-https://coffee-brew-log.onrender.com
+**Frontend:**  
+https://coffee-brew-log-3.onrender.com
 
-🔗 **Backend API:**  
-https://coffee-brew-log-api.onrender.com/api/brews/
+**Backend API:**  
+https://coffee-brew-log-backend-ygmu.onrender.com
 
 ---
 
 ## ✨ Features
 
-- ☕ Add coffee brewing sessions
-- 📝 Record coffee and brewing information
-- ⚖️ Record coffee and water quantities
+- ☕ Create a new coffee brew entry
+- 🫘 Record coffee beans
+- ☕ Select a brewing method
+- ⚖️ Record coffee and water grams
+- ⭐ Rate each brew from 1–5
+- 📝 Add tasting notes
 - 📋 View all saved brews
 - 🔍 Filter brews by brewing method
 - ✏️ Edit existing brew entries
 - 🗑️ Delete brew entries
 - 📱 Responsive user interface
-- 🔌 RESTful API integration
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
 ### Frontend
 
 - React
+- Vite
 - JavaScript
 - Bootstrap
-- Axios
-- Vite
+- CSS
 
 ### Backend
 
 - Django
 - Django REST Framework
+
+### Database
+
 - SQLite
 
 ### Deployment
@@ -61,9 +60,9 @@ https://coffee-brew-log-api.onrender.com/api/brews/
 
 ## 📸 Screenshots
 
-### 🏠 Home Page
+### 🏠 Brew Log
 
-![Home Page](screenshots/home.png)
+![Coffee Brew Log](screenshots/home.png)
 
 ### ➕ Add Brew
 
@@ -91,6 +90,15 @@ coffee-brew-log/
 │
 ├── frontend/
 │   ├── src/
+│   │   ├── components/
+│   │   │   ├── BrewForm.jsx
+│   │   │   ├── BrewList.jsx
+│   │   │   └── BrewCard.jsx
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   ├── index.html
 │   ├── package.json
 │   └── vite.config.js
 │
@@ -102,14 +110,3 @@ coffee-brew-log/
 │
 ├── Documentation.md
 └── README.md
-## 👩‍💻 Author
-
-**Ellen Sesoko**
-
-Aspiring Full-Stack Developer
-
-This project was developed as part of my full-stack development journey, demonstrating skills in React, Django REST Framework, CRUD operations, API integration, database management, and deployment.
-
-### 🔗 GitHub
-
-[View my GitHub profile](https://github.com/Ellen930805)
