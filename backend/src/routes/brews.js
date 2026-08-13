@@ -24,6 +24,7 @@ router.get('/', async (req, res) => {
     res.status(200).json(brews);
   } catch (error) {
     console.error(error);
+
     res.status(500).json({
       error: 'Failed to fetch brews',
     });
@@ -71,6 +72,7 @@ router.post('/', async (req, res) => {
     res.status(201).json(brew);
   } catch (error) {
     console.error(error);
+
     res.status(500).json({
       error: 'Failed to create brew',
     });
@@ -126,6 +128,7 @@ router.put('/:id', async (req, res) => {
     res.status(200).json(brew);
   } catch (error) {
     console.error(error);
+
     res.status(500).json({
       error: 'Failed to update brew',
     });
@@ -150,6 +153,7 @@ router.delete('/:id', async (req, res) => {
     res.status(204).send();
   } catch (error) {
     console.error(error);
+
     res.status(500).json({
       error: 'Failed to delete brew',
     });
