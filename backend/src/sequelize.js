@@ -5,7 +5,6 @@ const { Sequelize } = require('sequelize');
 
 const dataDirectory = path.join(__dirname, '..', 'data');
 
-// Make sure the data directory exists
 if (!fs.existsSync(dataDirectory)) {
   fs.mkdirSync(dataDirectory, { recursive: true });
 }
@@ -24,11 +23,12 @@ const sequelize = new Sequelize({
 async function initializeDatabase() {
   await sequelize.authenticate();
 
+  // Recreate the database tables so they match the current model.
   await sequelize.sync({
-    force: false,
+    force: true,
   });
 
-  console.log('Database connected and synchronized.');
+  console.log('Database connected and tables recreated.');
 }
 
 module.exports = {
