@@ -1,27 +1,39 @@
-import { useEffect, useState } from 'react';
-import BrewForm from './components/BrewForm';
-import BrewList from './components/BrewList';
+import { useEffect, useState } from "react";
+import BrewForm from "./components/BrewForm";
+import BrewList from "./components/BrewList";
+
+const API_URL = "https://coffee-brew-log-8.onrender.com";
 
 const emptyForm = {
-  coffee: '',
-  roast: '',
-  method: '',
-  ratio: '',
-  notes: '',
-  date: ''
+  beans: "",
+  method: "",
+  coffeeGrams: "",
+  waterGrams: "",
+  rating: "",
+  tastingNotes: "",
 };
 
 function App() {
   const [brews, setBrews] = useState([]);
   const [formData, setFormData] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
-  const [filter, setFilter] = useState('All');
-  const [error, setError] = useState('');
+  const [filter, setFilter] = useState("All");
+  const [error, setError] = useState("");
 
   const fetchBrews = async () => {
-    const response = await fetch('/api/brews');
-    const data = await response.json();
-    setBrews(data);
+    try {
+      const response = await fetch(`${API_URL}/api/brews`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to fetch brews.");
+      }
+
+      setBrews(data);
+    } catch (error) {
+      console.error(error);
+      setError("Failed to load brews.");
+    }
   };
 
   useEffect(() => {
@@ -30,37 +42,44 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError('');
+    setError("");
 
-    const payload = { ...formData };
-    const required = Object.values(payload).some(
-      (value) => String(value).trim() === ''
+    const hasEmptyField = Object.values(formData).some(
+      (value) => String(value).trim() === ""
     );
 
-    if (required) {
-      setError('Please fill in every field.');
+    if (hasEmptyField) {
+      setError("Please fill in every field.");
       return;
     }
 
     const url = editingId
-      ? `/api/brews/${editingId}`
-      : '/api/brews';
+      ? `${API_URL}/api/brews/${editingId}`
+      : `${API_URL}/api/brews`;
 
-    const method = editingId ? 'PUT' : 'POST';
+    const method = editingId ? "PUT" : "POST";
 
-    const response = await fetch(url, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (response.ok) {
-      setFormData(emptyForm);
-      setEditingId(null);
-      fetchBrews();
-    } else {
       const data = await response.json();
-      setError(data.error || 'Something went wrong');
+
+      if (response.ok) {
+        setFormData(emptyForm);
+        setEditingId(null);
+        await fetchBrews();
+      } else {
+        setError(data.error || "Something went wrong.");
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Unable to connect to the server.");
     }
   };
 
@@ -68,27 +87,46 @@ function App() {
     setEditingId(brew.id);
 
     setFormData({
-      coffee: brew.coffee,
-      roast: brew.roast,
+      beans: brew.beans,
       method: brew.method,
-      ratio: brew.ratio,
-      notes: brew.notes,
-      date: brew.date
+      coffeeGrams: brew.coffeeGrams,
+      waterGrams: brew.waterGrams,
+      rating: brew.rating,
+      tastingNotes: brew.tastingNotes,
     });
+
+    setError("");
   };
 
   const handleDelete = async (id) => {
-    const response = await fetch(`/api/brews/${id}`, {
-      method: 'DELETE'
-    });
+    setError("");
 
-    if (response.ok) {
-      fetchBrews();
+    try {
+      const response = await fetch(`${API_URL}/api/brews/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        await fetchBrews();
+      } else {
+        let data = {};
+
+        try {
+          data = await response.json();
+        } catch {
+          // Server may return an empty response.
+        }
+
+        setError(data.error || "Failed to delete brew.");
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Unable to connect to the server.");
     }
   };
 
   const visibleBrews =
-    filter === 'All'
+    filter === "All"
       ? brews
       : brews.filter((brew) => brew.method === filter);
 
@@ -114,7 +152,7 @@ function App() {
 
       <main className="content-grid">
         <section className="panel">
-          <h2>{editingId ? 'Edit brew entry' : 'New brew entry'}</h2>
+          <h2>{editingId ? "Edit brew entry" : "New brew entry"}</h2>
 
           <BrewForm
             formData={formData}
@@ -125,6 +163,7 @@ function App() {
             onCancel={() => {
               setEditingId(null);
               setFormData(emptyForm);
+              setError("");
             }}
           />
         </section>
