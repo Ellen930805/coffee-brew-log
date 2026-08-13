@@ -40,30 +40,32 @@ function BrewForm({
         </select>
       </label>
 
-      <label>
-        Coffee grams
-        <input
-          type="number"
-          min="1"
-          value={formData.coffeeGrams}
-          onChange={updateField("coffeeGrams")}
-          required
-        />
-      </label>
+      <div className="form-row">
+        <label>
+          Coffee grams
+          <input
+            type="number"
+            min="1"
+            value={formData.coffeeGrams}
+            onChange={updateField("coffeeGrams")}
+            required
+          />
+        </label>
+
+        <label>
+          Water grams
+          <input
+            type="number"
+            min="1"
+            value={formData.waterGrams}
+            onChange={updateField("waterGrams")}
+            required
+          />
+        </label>
+      </div>
 
       <label>
-        Water grams
-        <input
-          type="number"
-          min="1"
-          value={formData.waterGrams}
-          onChange={updateField("waterGrams")}
-          required
-        />
-      </label>
-
-      <label>
-        Rating
+        Rating (out of 5)
         <input
           type="number"
           min="1"
