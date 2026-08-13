@@ -110,3 +110,22 @@ coffee-brew-log/
 │
 ├── Documentation.md
 └── README.md
+## 🔌 API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/brews/` | Get all brew entries |
+| POST | `/api/brews/` | Create a new brew entry |
+| PUT | `/api/brews/<id>/` | Update an existing brew entry |
+| DELETE | `/api/brews/<id>/` | Delete a brew entry |
+## 👩‍💻 Author
+
+**Ellen Sesoko**
+
+Aspiring Full-Stack Developer
+
+This project was developed as part of my full-stack development journey, demonstrating skills in React, Django REST Framework, CRUD operations, API integration, database management, and deployment.
+
+### 🔗 GitHub
+
+[View my GitHub profile](https://github.com/Ellen930805)
