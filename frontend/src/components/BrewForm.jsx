@@ -1,16 +1,15 @@
-```jsx
 function BrewForm({
   formData,
   setFormData,
   error,
   onSubmit,
   editingId,
-  onCancel
+  onCancel,
 }) {
   const updateField = (field) => (event) => {
     setFormData((current) => ({
       ...current,
-      [field]: event.target.value
+      [field]: event.target.value,
     }));
   };
 
@@ -21,7 +20,7 @@ function BrewForm({
         <input
           type="text"
           value={formData.beans}
-          onChange={updateField('beans')}
+          onChange={updateField("beans")}
           required
         />
       </label>
@@ -30,7 +29,7 @@ function BrewForm({
         Brew method
         <select
           value={formData.method}
-          onChange={updateField('method')}
+          onChange={updateField("method")}
           required
         >
           <option value="">Select method</option>
@@ -47,7 +46,7 @@ function BrewForm({
           type="number"
           min="1"
           value={formData.coffeeGrams}
-          onChange={updateField('coffeeGrams')}
+          onChange={updateField("coffeeGrams")}
           required
         />
       </label>
@@ -58,7 +57,7 @@ function BrewForm({
           type="number"
           min="1"
           value={formData.waterGrams}
-          onChange={updateField('waterGrams')}
+          onChange={updateField("waterGrams")}
           required
         />
       </label>
@@ -70,7 +69,7 @@ function BrewForm({
           min="1"
           max="5"
           value={formData.rating}
-          onChange={updateField('rating')}
+          onChange={updateField("rating")}
           required
         />
       </label>
@@ -79,19 +78,19 @@ function BrewForm({
         Tasting notes
         <textarea
           value={formData.tastingNotes}
-          onChange={updateField('tastingNotes')}
+          onChange={updateField("tastingNotes")}
           required
         />
       </label>
 
-      {error ? <p className="error-text">{error}</p> : null}
+      {error && <p className="error-text">{error}</p>}
 
       <div className="form-actions">
         <button type="submit">
-          {editingId ? 'Update brew' : 'Save brew'}
+          {editingId ? "Update brew" : "Save brew"}
         </button>
 
-        {editingId ? (
+        {editingId && (
           <button
             type="button"
             className="secondary"
@@ -99,11 +98,10 @@ function BrewForm({
           >
             Cancel
           </button>
-        ) : null}
+        )}
       </div>
     </form>
   );
 }
 
 export default BrewForm;
-```
