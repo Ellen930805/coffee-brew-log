@@ -22,7 +22,6 @@ logging: false,
 async function initializeDatabase() {
 await sequelize.authenticate();
 
-// Recreate the database tables so they match the current model.
 await sequelize.sync({
 force: true,
 });
