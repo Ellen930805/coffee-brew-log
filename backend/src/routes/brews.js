@@ -1,6 +1,6 @@
+```js
 const express = require('express');
 const Brew = require('../models/brew');
-const { initializeDatabase } = require('../sequelize');
 
 const router = express.Router();
 
@@ -15,15 +15,14 @@ function isBlank(value) {
 // GET /api/brews
 router.get('/', async (req, res) => {
   try {
-    await initializeDatabase();
-
     const brews = await Brew.findAll({
       order: [['id', 'DESC']],
     });
 
     res.status(200).json(brews);
   } catch (error) {
-    console.error(error);
+    console.error('GET /api/brews error:', error);
+
     res.status(500).json({
       error: 'Failed to fetch brews',
     });
@@ -57,20 +56,19 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    await initializeDatabase();
-
     const brew = await Brew.create({
-      beans,
-      method,
-      coffeeGrams,
-      waterGrams,
-      rating,
-      tastingNotes,
+      beans: String(beans).trim(),
+      method: String(method).trim(),
+      coffeeGrams: Number(coffeeGrams),
+      waterGrams: Number(waterGrams),
+      rating: Number(rating),
+      tastingNotes: String(tastingNotes).trim(),
     });
 
     res.status(201).json(brew);
   } catch (error) {
-    console.error(error);
+    console.error('POST /api/brews error:', error);
+
     res.status(500).json({
       error: 'Failed to create brew',
     });
@@ -104,8 +102,6 @@ router.put('/:id', async (req, res) => {
   }
 
   try {
-    await initializeDatabase();
-
     const brew = await Brew.findByPk(req.params.id);
 
     if (!brew) {
@@ -115,17 +111,18 @@ router.put('/:id', async (req, res) => {
     }
 
     await brew.update({
-      beans,
-      method,
-      coffeeGrams,
-      waterGrams,
-      rating,
-      tastingNotes,
+      beans: String(beans).trim(),
+      method: String(method).trim(),
+      coffeeGrams: Number(coffeeGrams),
+      waterGrams: Number(waterGrams),
+      rating: Number(rating),
+      tastingNotes: String(tastingNotes).trim(),
     });
 
     res.status(200).json(brew);
   } catch (error) {
-    console.error(error);
+    console.error('PUT /api/brews/:id error:', error);
+
     res.status(500).json({
       error: 'Failed to update brew',
     });
@@ -135,8 +132,6 @@ router.put('/:id', async (req, res) => {
 // DELETE /api/brews/:id
 router.delete('/:id', async (req, res) => {
   try {
-    await initializeDatabase();
-
     const brew = await Brew.findByPk(req.params.id);
 
     if (!brew) {
@@ -149,7 +144,8 @@ router.delete('/:id', async (req, res) => {
 
     res.status(204).send();
   } catch (error) {
-    console.error(error);
+    console.error('DELETE /api/brews/:id error:', error);
+
     res.status(500).json({
       error: 'Failed to delete brew',
     });
@@ -157,3 +153,4 @@ router.delete('/:id', async (req, res) => {
 });
 
 module.exports = router;
+```
