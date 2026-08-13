@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import BrewForm from "./components/BrewForm";
 import BrewList from "./components/BrewList";
 
-const API_URL ="https://coffee-brew-log-backend-ygmu.onrender.com";
+const API_URL = "https://coffee-brew-log-backend-ygmu.onrender.com";
 
 const emptyForm = {
   beans: "",
@@ -22,7 +22,7 @@ function App() {
 
   const fetchBrews = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/brews`);
+      const response = await fetch(`${API_URL}/api/brews/`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -45,7 +45,7 @@ function App() {
     setError("");
 
     const hasEmptyField = Object.values(formData).some(
-      (value) => String(value).trim() === ""
+      (value) => value === null || value === undefined || String(value).trim() === ""
     );
 
     if (hasEmptyField) {
@@ -54,8 +54,8 @@ function App() {
     }
 
     const url = editingId
-      ? `${API_URL}/api/brews/${editingId}`
-      : `${API_URL}/api/brews`;
+      ? `${API_URL}/api/brews/${editingId}/`
+      : `${API_URL}/api/brews/`;
 
     const method = editingId ? "PUT" : "POST";
 
@@ -102,7 +102,7 @@ function App() {
     setError("");
 
     try {
-      const response = await fetch(`${API_URL}/api/brews/${id}`, {
+      const response = await fetch(`${API_URL}/api/brews/${id}/`, {
         method: "DELETE",
       });
 
