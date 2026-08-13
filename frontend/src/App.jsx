@@ -2,8 +2,12 @@ const handleSubmit = async (event) => {
   event.preventDefault();
   setError("");
 
+  // Check that every field has a value
   const hasEmptyField = Object.values(formData).some(
-    (value) => value === null || value === undefined || String(value).trim() === ""
+    (value) =>
+      value === null ||
+      value === undefined ||
+      String(value).trim() === ""
   );
 
   if (hasEmptyField) {
@@ -17,49 +21,62 @@ const handleSubmit = async (event) => {
 
   const method = editingId ? "PUT" : "POST";
 
+  const brewData = {
+    beans: formData.beans.trim(),
+    method: formData.method,
+    coffeeGrams: Number(formData.coffeeGrams),
+    waterGrams: Number(formData.waterGrams),
+    rating: Number(formData.rating),
+    tastingNotes: formData.tastingNotes.trim(),
+  };
+
   try {
     const response = await fetch(url, {
       method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        beans: formData.beans.trim(),
-        method: formData.method,
-        coffeeGrams: Number(formData.coffeeGrams),
-        waterGrams: Number(formData.waterGrams),
-        rating: Number(formData.rating),
-        tastingNotes: formData.tastingNotes.trim(),
-      }),
+      body: JSON.stringify(brewData),
     });
 
-    const text = await response.text();
+    const responseText = await response.text();
 
     let data = {};
 
-    try {
-      data = text ? JSON.parse(text) : {};
-    } catch {
-      data = {};
+    if (responseText) {
+      try {
+        data = JSON.parse(responseText);
+      } catch {
+        data = {};
+      }
     }
 
     if (!response.ok) {
-      console.error("Backend error:", data);
+      console.error("API error:", {
+        status: response.status,
+        response: data,
+      });
+
       setError(
-        data.error || `Request failed with status ${response.status}`
+        data.error ||
+          `Unable to ${editingId ? "update" : "create"} brew.`
       );
+
       return;
     }
 
+    // Success
     setFormData({ ...emptyForm });
     setEditingId(null);
     setShowForm(false);
+    setError("");
 
     await fetchBrews();
   } catch (error) {
-    console.error("Save error:", error);
+    console.error("Connection error:", error);
+
     setError(
-      "Could not connect to the Coffee Brew API. Please check the backend."
+      "Unable to connect to the Coffee Brew API. Please try again."
     );
   }
 };
