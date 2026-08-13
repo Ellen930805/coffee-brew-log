@@ -1,24 +1,24 @@
-import { useEffect, useState } from 'react';
-import BrewForm from './components/BrewForm';
-import BrewList from './components/BrewList';
+import { useEffect, useState } from "react";
+import BrewForm from "./components/BrewForm";
+import BrewList from "./components/BrewList";
 
-const API_URL = 'https://coffee-brew-log-8.onrender.com';
+const API_URL = "https://coffee-brew-log-8.onrender.com";
 
 const emptyForm = {
-  beans: '',
-  method: '',
-  coffeeGrams: '',
-  waterGrams: '',
-  rating: '',
-  tastingNotes: ''
+  beans: "",
+  method: "",
+  coffeeGrams: "",
+  waterGrams: "",
+  rating: "",
+  tastingNotes: "",
 };
 
 function App() {
   const [brews, setBrews] = useState([]);
-  const [formData, setFormData] = useState(emptyForm);
+  const [formData, setFormData] = useState({ ...emptyForm });
   const [editingId, setEditingId] = useState(null);
-  const [filter, setFilter] = useState('All');
-  const [error, setError] = useState('');
+  const [filter, setFilter] = useState("All");
+  const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
 
   const fetchBrews = async () => {
@@ -26,15 +26,15 @@ function App() {
       const response = await fetch(`${API_URL}/api/brews`);
 
       if (!response.ok) {
-        throw new Error('Failed to fetch brews');
+        throw new Error("Failed to fetch brews");
       }
 
       const data = await response.json();
       setBrews(data);
-      setError('');
+      setError("");
     } catch (error) {
-      console.error('Fetch error:', error);
-      setError('Unable to load brews. Please try again.');
+      console.error("Fetch error:", error);
+      setError("Unable to load brews. Please try again.");
     }
   };
 
@@ -44,14 +44,14 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError('');
+    setError("");
 
-    const required = Object.values(formData).some(
-      (value) => String(value).trim() === ''
+    const hasEmptyField = Object.values(formData).some(
+      (value) => String(value).trim() === ""
     );
 
-    if (required) {
-      setError('Please fill in every field.');
+    if (hasEmptyField) {
+      setError("Please fill in every field.");
       return;
     }
 
@@ -59,21 +59,21 @@ function App() {
       ? `${API_URL}/api/brews/${editingId}`
       : `${API_URL}/api/brews`;
 
-    const method = editingId ? 'PUT' : 'POST';
+    const method = editingId ? "PUT" : "POST";
 
     try {
       const response = await fetch(url, {
         method,
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Something went wrong.');
+        setError(data.error || "Something went wrong.");
         return;
       }
 
@@ -83,8 +83,8 @@ function App() {
 
       await fetchBrews();
     } catch (error) {
-      console.error('Save error:', error);
-      setError('Unable to save brew. Please try again.');
+      console.error("Save error:", error);
+      setError("Unable to save brew. Please try again.");
     }
   };
 
@@ -92,22 +92,22 @@ function App() {
     setEditingId(brew.id);
 
     setFormData({
-      beans: brew.beans || '',
-      method: brew.method || '',
-      coffeeGrams: brew.coffeeGrams ?? '',
-      waterGrams: brew.waterGrams ?? '',
-      rating: brew.rating ?? '',
-      tastingNotes: brew.tastingNotes || ''
+      beans: brew.beans ?? "",
+      method: brew.method ?? "",
+      coffeeGrams: brew.coffeeGrams ?? "",
+      waterGrams: brew.waterGrams ?? "",
+      rating: brew.rating ?? "",
+      tastingNotes: brew.tastingNotes ?? "",
     });
 
-    setError('');
+    setError("");
     setShowForm(true);
   };
 
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`${API_URL}/api/brews/${id}`, {
-        method: 'DELETE'
+        method: "DELETE",
       });
 
       if (!response.ok) {
@@ -116,37 +116,44 @@ function App() {
         try {
           data = await response.json();
         } catch {
-          // DELETE may return an empty response.
+          // The server may return an empty response.
         }
 
-        setError(data.error || 'Failed to delete brew.');
+        setError(data.error || "Failed to delete brew.");
         return;
       }
 
-      setError('');
+      setError("");
+
+      if (editingId === id) {
+        setEditingId(null);
+        setFormData({ ...emptyForm });
+        setShowForm(false);
+      }
+
       await fetchBrews();
     } catch (error) {
-      console.error('Delete error:', error);
-      setError('Unable to delete brew. Please try again.');
+      console.error("Delete error:", error);
+      setError("Unable to delete brew. Please try again.");
     }
   };
 
   const handleAdd = () => {
     setEditingId(null);
     setFormData({ ...emptyForm });
-    setError('');
+    setError("");
     setShowForm(true);
   };
 
   const handleCancel = () => {
     setEditingId(null);
     setFormData({ ...emptyForm });
-    setError('');
+    setError("");
     setShowForm(false);
   };
 
   const visibleBrews =
-    filter === 'All'
+    filter === "All"
       ? brews
       : brews.filter((brew) => brew.method === filter);
 
@@ -180,7 +187,7 @@ function App() {
       {showForm && (
         <section className="form-panel">
           <div className="form-header">
-            <h2>{editingId ? 'Edit brew' : 'Add brew'}</h2>
+            <h2>{editingId ? "Edit a brew" : "Add a brew"}</h2>
 
             <button
               type="button"
@@ -215,4 +222,3 @@ function App() {
 }
 
 export default App;
-   
