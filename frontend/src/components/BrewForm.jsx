@@ -14,11 +14,11 @@ function BrewForm({
   onSubmit,
   onCancel,
   onDelete,
-  isSaving,
+  isSaving = false,
   isDeleting = false,
-  serverError,
+  serverError = "",
   submitLabel = "Save",
-})  {
+}) {
   const [formData, setFormData] = useState(initialValues);
   const [validationError, setValidationError] = useState("");
 
@@ -29,13 +29,18 @@ function BrewForm({
       ...currentData,
       [name]: value,
     }));
+
+    setValidationError("");
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const hasBlankField = Object.values(formData).some(
-      (value) => String(value).trim() === "",
+      (value) =>
+        value === null ||
+        value === undefined ||
+        String(value).trim() === ""
     );
 
     if (hasBlankField) {
@@ -71,6 +76,7 @@ function BrewForm({
         <label htmlFor="beans" className="form-label">
           Beans
         </label>
+
         <input
           id="beans"
           name="beans"
@@ -86,6 +92,7 @@ function BrewForm({
         <label htmlFor="method" className="form-label">
           Method
         </label>
+
         <select
           id="method"
           name="method"
@@ -107,6 +114,7 @@ function BrewForm({
           <label htmlFor="coffee_grams" className="form-label">
             Coffee grams
           </label>
+
           <input
             id="coffee_grams"
             name="coffee_grams"
@@ -123,6 +131,7 @@ function BrewForm({
           <label htmlFor="water_grams" className="form-label">
             Water grams
           </label>
+
           <input
             id="water_grams"
             name="water_grams"
@@ -140,6 +149,7 @@ function BrewForm({
         <label htmlFor="rating" className="form-label">
           Rating
         </label>
+
         <select
           id="rating"
           name="rating"
@@ -161,6 +171,7 @@ function BrewForm({
         <label htmlFor="tasting_notes" className="form-label">
           Tasting notes
         </label>
+
         <textarea
           id="tasting_notes"
           name="tasting_notes"
