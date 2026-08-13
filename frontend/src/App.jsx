@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import BrewForm from "./components/BrewForm";
 import BrewList from "./components/BrewList";
 
-const API_URL = "https://coffee-brew-log-frontend8.onrender.com
+const API_URL = https://coffee-brew-log-frontend8.onrender.com
 
 const emptyForm = {
   beans: "",
