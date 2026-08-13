@@ -1,5 +1,6 @@
 :root {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   color: #171717;
   background: #ffffff;
   font-synthesis: none;
@@ -127,6 +128,19 @@ button {
   display: grid;
   gap: 8px;
   font-weight: 600;
+}
+
+/* Coffee grams + Water grams */
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  width: 100%;
+}
+
+.form-row label {
+  min-width: 0;
 }
 
 .brew-form input,
@@ -302,6 +316,10 @@ button {
 
   .add-button {
     padding: 14px 30px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
   }
 
   .brew-card {
