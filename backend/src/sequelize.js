@@ -1,35 +1,49 @@
-const path = require('path');
-const fs = require('fs');
-const { Sequelize } = require('sequelize');
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../sequelize");
 
-const dataDirectory = path.join(__dirname, '..', 'data');
+const Brew = sequelize.define(
+  "Brew",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
 
-if (!fs.existsSync(dataDirectory)) {
-fs.mkdirSync(dataDirectory, { recursive: true });
-}
+    beans: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
 
-const storagePath = path.join(
-dataDirectory,
-'coffee-brew-log.sqlite'
+    method: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    coffeeGrams: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+
+    waterGrams: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+
+    tastingNotes: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: "brews",
+    timestamps: false,
+  }
 );
 
-const sequelize = new Sequelize({
-dialect: 'sqlite',
-storage: storagePath,
-logging: false,
-});
-
-async function initializeDatabase() {
-await sequelize.authenticate();
-
-await sequelize.sync({
-force: true,
-});
-
-console.log('Database connected and tables recreated.');
-}
-
-module.exports = {
-sequelize,
-initializeDatabase,
-};
+module.exports = Brew;
