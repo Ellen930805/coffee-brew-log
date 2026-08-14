@@ -106,3 +106,21 @@ coffee-brew-log/
 ├── Documentation.md
 ├── README.md
 └── .gitignore
+🌍 Deployment
+
+The application is deployed using Render.
+
+Frontend
+
+https://coffee-brew-log-frontend8.onrender.com/
+
+Backend API
+
+https://coffee-brew-log-backend-ygmu.onrender.com/
+👩‍💻 Author
+
+Ellen Sesoko
+
+GitHub:
+
+https://github.com/Ellen930805
