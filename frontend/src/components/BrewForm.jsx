@@ -1,158 +1,46 @@
-function BrewForm({
-  formData,
-  setFormData,
-  error,
-  onSubmit,
-  editingId,
-  onCancel,
-}) {
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormData((currentData) => ({
-      ...currentData,
-      [name]: value,
-    }));
-  };
-
+function BrewCard({ brew, onEdit, onDelete }) {
   return (
-    <form onSubmit={onSubmit}>
-      {error && (
-        <div className="alert alert-danger" role="alert">
-          {error}
-        </div>
-      )}
+    <div className="card mb-3 shadow-sm">
+      <div className="card-body">
+        <h5 className="card-title">{brew.beans}</h5>
 
-      <div className="mb-3">
-        <label htmlFor="beans" className="form-label">
-          Beans
-        </label>
+        <p className="card-text mb-1">
+          <strong>Method:</strong> {brew.method}
+        </p>
 
-        <input
-          id="beans"
-          name="beans"
-          type="text"
-          className="form-control"
-          value={formData.beans}
-          onChange={handleChange}
-          required
-        />
-      </div>
+        <p className="card-text mb-1">
+          <strong>Coffee:</strong> {brew.coffeeGrams}g
+        </p>
 
-      <div className="mb-3">
-        <label htmlFor="method" className="form-label">
-          Method
-        </label>
+        <p className="card-text mb-1">
+          <strong>Water:</strong> {brew.waterGrams}g
+        </p>
 
-        <select
-          id="method"
-          name="method"
-          className="form-select"
-          value={formData.method}
-          onChange={handleChange}
-          required
+        <p className="card-text mb-1">
+          <strong>Rating:</strong> {brew.rating}/5
+        </p>
+
+        <p className="card-text mb-3">
+          <strong>Tasting Notes:</strong> {brew.tastingNotes}</p>
+
+        <button
+          type="button"
+          className="btn btn-primary btn-sm me-2"
+          onClick={() => onEdit(brew)}
         >
-          <option value="">Select a method</option>
-          <option value="Pour Over">Pour Over</option>
-          <option value="French Press">French Press</option>
-          <option value="Espresso">Espresso</option>
-          <option value="Aeropress">Aeropress</option>
-        </select>
-      </div>
-
-      <div className="row">
-        <div className="col-md-6 mb-3">
-          <label htmlFor="coffeeGrams" className="form-label">
-            Coffee grams
-          </label>
-
-          <input
-            id="coffeeGrams"
-            name="coffeeGrams"
-            type="number"
-            min="1"
-            className="form-control"
-            value={formData.coffeeGrams}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="col-md-6 mb-3">
-          <label htmlFor="waterGrams" className="form-label">
-            Water grams
-          </label>
-
-          <input
-            id="waterGrams"
-            name="waterGrams"
-            type="number"
-            min="1"
-            className="form-control"
-            value={formData.waterGrams}
-            onChange={handleChange}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="rating" className="form-label">
-          Rating
-        </label>
-
-        <select
-          id="rating"
-          name="rating"
-          className="form-select"
-          value={formData.rating}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select a rating</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="tastingNotes" className="form-label">
-          Tasting notes
-        </label>
-
-        <textarea
-          id="tastingNotes"
-          name="tastingNotes"
-          className="form-control"
-          rows="4"
-          value={formData.tastingNotes}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <div className="d-flex gap-2">
-        <button type="submit" className="btn btn-primary">
-          {editingId ? "Update Brew" : "Save Brew"}
+          Edit
         </button>
 
-        {editingId && (
-          <button
-            type="button"
-            className="btn btn-outline-secondary"
-            onClick={onCancel}
-          >
-            Cancel
-          </button>
-        )}
+        <button
+          type="button"
+          className="btn btn-danger btn-sm"
+          onClick={() => onDelete(brew.id)}
+        >
+          Delete
+        </button>
       </div>
-    </form>
+    </div>
   );
 }
 
-export default BrewForm;
-
-      
+export default BrewCard;
