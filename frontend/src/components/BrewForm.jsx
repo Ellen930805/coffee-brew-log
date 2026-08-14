@@ -1,27 +1,11 @@
-import { useState } from "react";
-
-const initialFormData = {
-  beans: "",
-  method: "",
-  coffee_grams: "",
-  water_grams: "",
-  rating: "",
-  tasting_notes: "",
-};
-
 function BrewForm({
-  initialValues = initialFormData,
+  formData,
+  setFormData,
+  error,
   onSubmit,
+  editingId,
   onCancel,
-  onDelete,
-  isSaving = false,
-  isDeleting = false,
-  serverError = "",
-  submitLabel = "Save",
 }) {
-  const [formData, setFormData] = useState(initialValues);
-  const [validationError, setValidationError] = useState("");
-
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -29,46 +13,13 @@ function BrewForm({
       ...currentData,
       [name]: value,
     }));
-
-    setValidationError("");
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const hasBlankField = Object.values(formData).some(
-      (value) =>
-        value === null ||
-        value === undefined ||
-        String(value).trim() === ""
-    );
-
-    if (hasBlankField) {
-      setValidationError("Please complete every field.");
-      return;
-    }
-
-    setValidationError("");
-
-    await onSubmit({
-      ...formData,
-      coffee_grams: Number(formData.coffee_grams),
-      water_grams: Number(formData.water_grams),
-      rating: Number(formData.rating),
-    });
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      {validationError && (
-        <div className="alert alert-warning" role="alert">
-          {validationError}
-        </div>
-      )}
-
-      {serverError && (
+    <form onSubmit={onSubmit}>
+      {error && (
         <div className="alert alert-danger" role="alert">
-          {serverError}
+          {error}
         </div>
       )}
 
@@ -111,34 +62,34 @@ function BrewForm({
 
       <div className="row">
         <div className="col-md-6 mb-3">
-          <label htmlFor="coffee_grams" className="form-label">
+          <label htmlFor="coffeeGrams" className="form-label">
             Coffee grams
           </label>
 
           <input
-            id="coffee_grams"
-            name="coffee_grams"
+            id="coffeeGrams"
+            name="coffeeGrams"
             type="number"
             min="1"
             className="form-control"
-            value={formData.coffee_grams}
+            value={formData.coffeeGrams}
             onChange={handleChange}
             required
           />
         </div>
 
         <div className="col-md-6 mb-3">
-          <label htmlFor="water_grams" className="form-label">
+          <label htmlFor="waterGrams" className="form-label">
             Water grams
           </label>
 
           <input
-            id="water_grams"
-            name="water_grams"
+            id="waterGrams"
+            name="waterGrams"
             type="number"
             min="1"
             className="form-control"
-            value={formData.water_grams}
+            value={formData.waterGrams}
             onChange={handleChange}
             required
           />
@@ -168,49 +119,33 @@ function BrewForm({
       </div>
 
       <div className="mb-4">
-        <label htmlFor="tasting_notes" className="form-label">
+        <label htmlFor="tastingNotes" className="form-label">
           Tasting notes
         </label>
 
         <textarea
-          id="tasting_notes"
-          name="tasting_notes"
+          id="tastingNotes"
+          name="tastingNotes"
           className="form-control"
           rows="4"
-          value={formData.tasting_notes}
+          value={formData.tastingNotes}
           onChange={handleChange}
           required
         />
       </div>
 
-      <div className="d-flex justify-content-between align-items-center gap-3">
-        <div className="d-flex gap-2">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={isSaving || isDeleting}
-          >
-            {isSaving ? "Saving..." : submitLabel}
-          </button>
+      <div className="d-flex gap-2">
+        <button type="submit" className="btn btn-primary">
+          {editingId ? "Update Brew" : "Save Brew"}
+        </button>
 
+        {editingId && (
           <button
             type="button"
             className="btn btn-outline-secondary"
             onClick={onCancel}
-            disabled={isSaving || isDeleting}
           >
             Cancel
-          </button>
-        </div>
-
-        {onDelete && (
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={onDelete}
-            disabled={isSaving || isDeleting}
-          >
-            {isDeleting ? "Deleting..." : "Delete"}
           </button>
         )}
       </div>
@@ -219,3 +154,5 @@ function BrewForm({
 }
 
 export default BrewForm;
+
+      
