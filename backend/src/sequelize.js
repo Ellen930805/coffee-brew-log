@@ -22,11 +22,9 @@ const sequelize = new Sequelize({
 async function initializeDatabase() {
   await sequelize.authenticate();
 
-  await sequelize.sync({
-    force: true,
-  });
+  await sequelize.sync();
 
-  console.log('Database connected and tables recreated.');
+  console.log('Database connected and tables ready.');
 }
 
 module.exports = {
